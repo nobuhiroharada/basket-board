@@ -19,28 +19,25 @@ class BaseScene: SKScene, SKPhysicsContactDelegate {
     var playerAs: Array = [SKSpriteNode?]()
     var playerBs: Array = [SKSpriteNode?]()
     
-    var ball:     SKSpriteNode = SKSpriteNode(imageNamed: "ball")
-    var playerA0: SKSpriteNode = SKSpriteNode(imageNamed: "playerA1")
-    var playerA1: SKSpriteNode = SKSpriteNode(imageNamed: "playerA2")
-    var playerA2: SKSpriteNode = SKSpriteNode(imageNamed: "playerA3")
-    var playerA3: SKSpriteNode = SKSpriteNode(imageNamed: "playerA4")
-    var playerA4: SKSpriteNode = SKSpriteNode(imageNamed: "playerA5")
-    var playerB0: SKSpriteNode = SKSpriteNode(imageNamed: "playerB1")
-    var playerB1: SKSpriteNode = SKSpriteNode(imageNamed: "playerB2")
-    var playerB2: SKSpriteNode = SKSpriteNode(imageNamed: "playerB3")
-    var playerB3: SKSpriteNode = SKSpriteNode(imageNamed: "playerB4")
-    var playerB4: SKSpriteNode = SKSpriteNode(imageNamed: "playerB5")
-    var eraser:   SKSpriteNode = SKSpriteNode(imageNamed: "eraser")
-    var rewind:   SKSpriteNode = SKSpriteNode(imageNamed: "rewind")
-    var reset:    SKSpriteNode = SKSpriteNode(imageNamed: "reset")
-    var zoneSetting:  SKSpriteNode = SKSpriteNode(imageNamed: "zoneSetting")
-    var othersSetting:  SKSpriteNode = SKSpriteNode(imageNamed: "othersSetting")
+//    var ball:     PlayerBallNode = PlayerBallNode(imageNamed: "ball")
+//    var playerA0: PlayerBallNode = PlayerBallNode(imageNamed: "playerA1")
+//    var playerA1: PlayerBallNode = PlayerBallNode(imageNamed: "playerA2")
+//    var playerA2: PlayerBallNode = PlayerBallNode(imageNamed: "playerA3")
+//    var playerA3: PlayerBallNode = PlayerBallNode(imageNamed: "playerA4")
+//    var playerA4: PlayerBallNode = PlayerBallNode(imageNamed: "playerA5")
+//    var playerB0: PlayerBallNode = PlayerBallNode(imageNamed: "playerB1")
+//    var playerB1: PlayerBallNode = PlayerBallNode(imageNamed: "playerB2")
+//    var playerB2: PlayerBallNode = PlayerBallNode(imageNamed: "playerB3")
+//    var playerB3: PlayerBallNode = PlayerBallNode(imageNamed: "playerB4")
+//    var playerB4: PlayerBallNode = PlayerBallNode(imageNamed: "playerB5")
+    var eraser:   BarItemNode = BarItemNode(imageNamed: "eraser")
+    var rewind:   BarItemNode = BarItemNode(imageNamed: "rewind")
+    var reset:    BarItemNode = BarItemNode(imageNamed: "reset")
+    var setting:  BarItemNode = BarItemNode(imageNamed: "othersSetting")
     
     let hide:     SKAction     = SKAction.hide()
     
     let userDefaults = UserDefaults.standard
-    
-//    var forward: SKSpriteNode         = SKSpriteNode(imageNamed: "forward")
     
     var startPoint: CGPoint?
     var lineNum: Int = 0
@@ -59,19 +56,25 @@ class BaseScene: SKScene, SKPhysicsContactDelegate {
         let location = touch.location(in: self)
         let nodes = self.nodes(at: location)
         
-        if nodes.contains(ball)
-            || nodes.contains(playerA0)
-            || nodes.contains(playerA1)
-            || nodes.contains(playerA2)
-            || nodes.contains(playerA3)
-            || nodes.contains(playerA4)
-            || nodes.contains(playerB0)
-            || nodes.contains(playerB1)
-            || nodes.contains(playerB2)
-            || nodes.contains(playerB3)
-            || nodes.contains(playerB4)
+        if nodes.contains(Objects.ball)
+            || nodes.contains(Objects.playerA0)
+            || nodes.contains(Objects.playerA1)
+            || nodes.contains(Objects.playerA2)
+            || nodes.contains(Objects.playerA3)
+            || nodes.contains(Objects.playerA4)
+            || nodes.contains(Objects.playerB0)
+            || nodes.contains(Objects.playerB1)
+            || nodes.contains(Objects.playerB2)
+            || nodes.contains(Objects.playerB3)
+            || nodes.contains(Objects.playerB4)
         {
-            nodeAddAction(nodes, scaleBig)
+            let playerNum = userDefaults.integer(forKey: "playerNum")
+            if playerNum == 5 {
+                nodeAddAction_5player(nodes, scaleBig)
+            } else if playerNum == 3 {
+                nodeAddAction_3player(nodes, scaleBig)
+            }
+            
             mode = Status.Node
         }
         else if nodes.contains(eraser)
@@ -86,11 +89,7 @@ class BaseScene: SKScene, SKPhysicsContactDelegate {
         {
             doReset()
         }
-        else if nodes.contains(zoneSetting)
-        {
-            openFormations()
-        }
-        else if nodes.contains(othersSetting)
+        else if nodes.contains(setting)
         {
             openOthersSetting()
         }
@@ -109,19 +108,25 @@ class BaseScene: SKScene, SKPhysicsContactDelegate {
         let action = SKAction.move(to: location, duration: 0)
         
         if mode == Status.Node {
-            if nodes.contains(ball)
-                || nodes.contains(playerA0)
-                || nodes.contains(playerA1)
-                || nodes.contains(playerA2)
-                || nodes.contains(playerA3)
-                || nodes.contains(playerA4)
-                || nodes.contains(playerB0)
-                || nodes.contains(playerB1)
-                || nodes.contains(playerB2)
-                || nodes.contains(playerB3)
-                || nodes.contains(playerB4)
+            if nodes.contains(Objects.ball)
+                || nodes.contains(Objects.playerA0)
+                || nodes.contains(Objects.playerA1)
+                || nodes.contains(Objects.playerA2)
+                || nodes.contains(Objects.playerA3)
+                || nodes.contains(Objects.playerA4)
+                || nodes.contains(Objects.playerB0)
+                || nodes.contains(Objects.playerB1)
+                || nodes.contains(Objects.playerB2)
+                || nodes.contains(Objects.playerB3)
+                || nodes.contains(Objects.playerB4)
             {
-                nodeAddAction(nodes, action)
+                let playerNum = userDefaults.integer(forKey: "playerNum")
+                if playerNum == 5 {
+                    nodeAddAction_5player(nodes, action)
+                } else if playerNum == 3 {
+                    nodeAddAction_3player(nodes, action)
+                }
+                
             }
         }
         
@@ -136,19 +141,24 @@ class BaseScene: SKScene, SKPhysicsContactDelegate {
         let location = touch.location(in: self)
         let nodes = self.nodes(at: location)
         
-        if nodes.contains(ball)
-            || nodes.contains(playerA0)
-            || nodes.contains(playerA1)
-            || nodes.contains(playerA2)
-            || nodes.contains(playerA3)
-            || nodes.contains(playerA4)
-            || nodes.contains(playerB0)
-            || nodes.contains(playerB1)
-            || nodes.contains(playerB2)
-            || nodes.contains(playerB3)
-            || nodes.contains(playerB4)
+        if nodes.contains(Objects.ball)
+            || nodes.contains(Objects.playerA0)
+            || nodes.contains(Objects.playerA1)
+            || nodes.contains(Objects.playerA2)
+            || nodes.contains(Objects.playerA3)
+            || nodes.contains(Objects.playerA4)
+            || nodes.contains(Objects.playerB0)
+            || nodes.contains(Objects.playerB1)
+            || nodes.contains(Objects.playerB2)
+            || nodes.contains(Objects.playerB3)
+            || nodes.contains(Objects.playerB4)
         {
-            nodeAddAction(nodes, scaleOrigin)
+            let playerNum = userDefaults.integer(forKey: "playerNum")
+            if playerNum == 5 {
+                nodeAddAction_5player(nodes, scaleOrigin)
+            } else if playerNum == 3 {
+                nodeAddAction_3player(nodes, scaleOrigin)
+            }
         }
         
         if mode == Status.Draw {
@@ -157,7 +167,7 @@ class BaseScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func nodeAddAction(_ nodes: Array<SKNode>, _ action: SKAction)
+    func nodeAddAction_5player(_ nodes: Array<SKNode>, _ action: SKAction)
     {
         for node in nodes
         {
@@ -182,7 +192,29 @@ class BaseScene: SKScene, SKPhysicsContactDelegate {
             } else if node.name == "playerB4" {
                 self.players[9]?.run(action)
             } else if node.name == "ball" {
-                self.ball.run(action)
+                Objects.ball.run(action)
+            }
+        }
+    }
+    
+    func nodeAddAction_3player(_ nodes: Array<SKNode>, _ action: SKAction)
+    {
+        for node in nodes
+        {
+            if node.name == "playerA0" {
+                self.players[0]?.run(action)
+            } else if node.name == "playerA1" {
+                self.players[1]?.run(action)
+            } else if node.name == "playerA2" {
+                self.players[2]?.run(action)
+            } else if node.name == "playerB0" {
+                self.players[3]?.run(action)
+            } else if node.name == "playerB1" {
+                self.players[4]?.run(action)
+            } else if node.name == "playerB2" {
+                self.players[5]?.run(action)
+            } else if node.name == "ball" {
+                Objects.ball.run(action)
             }
         }
     }
@@ -200,10 +232,10 @@ class BaseScene: SKScene, SKPhysicsContactDelegate {
         shape.path = path
         
         shape.strokeColor = userDefaults.colorForKey(key: "lineColor")!
-        shape.lineWidth = 4
+        shape.lineWidth = CGFloat(userDefaults.integer(forKey: "lineThick"))
+        
         shape.name = "line\(lineNum)"
         self.addChild(shape)
-//        print(lineNum)
     }
     
     //MARK: 線をすべて消す
@@ -251,15 +283,6 @@ class BaseScene: SKScene, SKPhysicsContactDelegate {
         let initScene = InitScene(size: self.size)
         
         self.view?.presentScene(initScene)
-    }
-    
-    //MARK: フォーメーション設定画面表示
-    func openFormations(){
-        self.removeAllChildren()
-        
-        let settingZoneScene = SettingZoneScene(size: self.size)
-        
-        self.view?.presentScene(settingZoneScene)
     }
     
     //MARK: その他設定画面表示

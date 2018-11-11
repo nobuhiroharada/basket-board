@@ -14,9 +14,20 @@ class OthersSettingScene: SKScene {
     let screenHeight = UIScreen.main.bounds.size.height
     
     var back:  SKSpriteNode = SKSpriteNode(imageNamed: "back")
-    var grayLine:  SKSpriteNode = SKSpriteNode(imageNamed: "grayLine")
-    var orangeLine:  SKSpriteNode = SKSpriteNode(imageNamed: "orangeLine")
-    var redLine:  SKSpriteNode = SKSpriteNode(imageNamed: "redLine")
+    
+    var fullcourtIcon: SettingIconNode = SettingIconNode(imageNamed: "fullcourt_icon")
+    var halfcourtIcon: SettingIconNode = SettingIconNode(imageNamed: "halfcourt_icon")
+    
+    var smallLineIcon: SettingIconNode = SettingIconNode(imageNamed: "smallLine")
+    var mediumLineIcon: SettingIconNode = SettingIconNode(imageNamed: "mediumLine")
+    var largeLineIcon: SettingIconNode = SettingIconNode(imageNamed: "largeLine")
+    
+    var grayLineIcon:  SettingIconNode = SettingIconNode(imageNamed: "grayLine")
+    var orangeLineIcon:  SettingIconNode = SettingIconNode(imageNamed: "orangeLine")
+    var redLineIcon:  SettingIconNode = SettingIconNode(imageNamed: "redLine")
+    
+    var threePlayerIcon: SettingIconNode = SettingIconNode(imageNamed: "three_player")
+    var fivePlayerIcon: SettingIconNode = SettingIconNode(imageNamed: "five_player")
     
     let userDefaults = UserDefaults.standard
     
@@ -29,24 +40,67 @@ class OthersSettingScene: SKScene {
         background.size = self.size
         self.addChild(background)
         
-        back.position = CGPoint(x: SKVIEW_WIDTH*0.5-100, y: SKVIEW_HEIGHT-50)
+        back.position = CGPoint(x: SKVIEW_WIDTH*0.25, y: SKVIEW_HEIGHT-50)
         back.size = CGSize(width: 100, height: 50)
         self.addChild(back)
         
-        grayLine.position = CGPoint(x: SKVIEW_WIDTH*0.25, y: SKVIEW_HEIGHT-150)
-        grayLine.size = CGSize(width: 70, height: 70)
-        grayLine.name = "grayLine"
-        self.addChild(grayLine)
+        fullcourtIcon.position = CGPoint(x: SKVIEW_WIDTH*0.25, y: SKVIEW_HEIGHT-150)
+        fullcourtIcon.name = "fullcourtBack"
+        self.addChild(fullcourtIcon)
         
-        orangeLine.position = CGPoint(x: SKVIEW_WIDTH*0.50, y: SKVIEW_HEIGHT-150)
-        orangeLine.size = CGSize(width: 70, height: 70)
-        orangeLine.name = "orangeLine"
-        self.addChild(orangeLine)
+        halfcourtIcon.position = CGPoint(x: SKVIEW_WIDTH*0.50, y: SKVIEW_HEIGHT-150)
+        halfcourtIcon.name = "halfcourtBack"
+        self.addChild(halfcourtIcon)
         
-        redLine.position = CGPoint(x: SKVIEW_WIDTH*0.75, y: SKVIEW_HEIGHT-150)
-        redLine.size = CGSize(width: 70, height: 70)
-        redLine.name = "redLine"
-        self.addChild(redLine)
+        var tmplineThick = userDefaults.integer(forKey: "lineThick")
+        
+        smallLineIcon.position = CGPoint(x: SKVIEW_WIDTH*0.25, y: SKVIEW_HEIGHT-250)
+        smallLineIcon.name = "smallLine"
+        smallLineIcon.alpha = 0.3
+        if tmplineThick == 2 {
+            smallLineIcon.alpha = 1
+        }
+        self.addChild(smallLineIcon)
+        
+        mediumLineIcon.position = CGPoint(x: SKVIEW_WIDTH*0.50, y: SKVIEW_HEIGHT-250)
+        mediumLineIcon.name = "mediumLine"
+        mediumLineIcon.alpha = 0.3
+        if tmplineThick == 4 {
+            mediumLineIcon.alpha = 1
+        }
+        self.addChild(mediumLineIcon)
+        
+        largeLineIcon.position = CGPoint(x: SKVIEW_WIDTH*0.75, y: SKVIEW_HEIGHT-250)
+        largeLineIcon.name = "largeLine"
+        largeLineIcon.alpha = 0.3
+        if tmplineThick == 6 {
+            largeLineIcon.alpha = 1
+        }
+        self.addChild(largeLineIcon)
+        
+        var tmplineColor = userDefaults.colorForKey(key: "lineColor")!
+        
+        grayLineIcon.position = CGPoint(x: SKVIEW_WIDTH*0.25, y: SKVIEW_HEIGHT-350)
+        grayLineIcon.name = "grayLine"
+        self.addChild(grayLineIcon)
+        
+        orangeLineIcon.position = CGPoint(x: SKVIEW_WIDTH*0.50, y: SKVIEW_HEIGHT-350)
+        orangeLineIcon.name = "orangeLine"
+        self.addChild(orangeLineIcon)
+        
+        redLineIcon.position = CGPoint(x: SKVIEW_WIDTH*0.75, y: SKVIEW_HEIGHT-350)
+        redLineIcon.name = "redLine"
+        self.addChild(redLineIcon)
+        
+        threePlayerIcon.position = CGPoint(x: SKVIEW_WIDTH*0.25, y: SKVIEW_HEIGHT-450)
+        threePlayerIcon.name = "threePlayer"
+        self.addChild(threePlayerIcon)
+        
+        fivePlayerIcon.position = CGPoint(x: SKVIEW_WIDTH*0.50, y: SKVIEW_HEIGHT-450)
+        fivePlayerIcon.name = "fivePlayer"
+        self.addChild(fivePlayerIcon)
+        
+        iconOpacityControl()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
@@ -60,25 +114,66 @@ class OthersSettingScene: SKScene {
         {
             goBack()
         }
-        else if nodes.contains(grayLine)
+        else if nodes.contains(fullcourtIcon)
+        {
+            userDefaults.set(true, forKey: "isFullcourt")
+            userDefaults.synchronize()
+            iconOpacityControl()
+        }
+        else if nodes.contains(halfcourtIcon)
+        {
+            userDefaults.set(false, forKey: "isFullcourt")
+            userDefaults.synchronize()
+            iconOpacityControl()
+        }
+        else if nodes.contains(smallLineIcon)
+        {
+            userDefaults.set(2, forKey: "lineThick")
+            userDefaults.synchronize()
+            iconOpacityControl()
+        }
+        else if nodes.contains(mediumLineIcon)
+        {
+            userDefaults.set(4, forKey: "lineThick")
+            userDefaults.synchronize()
+            iconOpacityControl()
+        }
+        else if nodes.contains(largeLineIcon)
+        {
+            userDefaults.set(6, forKey: "lineThick")
+            userDefaults.synchronize()
+            iconOpacityControl()
+        }
+        else if nodes.contains(grayLineIcon)
         {
             userDefaults.setColor(color: UIColor.gray, forKey: "lineColor")
             userDefaults.synchronize()
-            goBack()
+            iconOpacityControl()
         }
-        else if nodes.contains(orangeLine)
+        else if nodes.contains(orangeLineIcon)
         {
             userDefaults.setColor(color: UIColor.orange, forKey: "lineColor")
             userDefaults.synchronize()
-            goBack()
+            iconOpacityControl()
         }
-        else if nodes.contains(redLine)
+        else if nodes.contains(redLineIcon)
         {
             userDefaults.setColor(color: UIColor.red, forKey: "lineColor")
             userDefaults.synchronize()
-            goBack()
+            iconOpacityControl()
         }
-        
+        else if nodes.contains(threePlayerIcon)
+        {
+            userDefaults.set(3, forKey: "playerNum")
+            userDefaults.synchronize()
+            iconOpacityControl()
+        }
+        else if nodes.contains(fivePlayerIcon)
+        {
+            userDefaults.set(5, forKey: "playerNum")
+            userDefaults.synchronize()
+            iconOpacityControl()
+        }
     }
     
     // 初期画面に戻る
@@ -91,46 +186,43 @@ class OthersSettingScene: SKScene {
         self.view?.presentScene(initScene)
     }
     
-    // 23の画面を開く
-    func openZone23()
+    func iconOpacityControl()
     {
-        self.removeAllChildren()
+        let IsFullcourt_now = userDefaults.bool(forKey: "isFullcourt")
+        let lineThick_now = userDefaults.integer(forKey: "lineThick")
+        let lineColor_now = userDefaults.colorForKey(key: "lineColor")!
+        let playerNum_now = userDefaults.integer(forKey: "playerNum")
         
-        let zone23 = Zone23(size: self.size)
-        //        let reveal = SKTransition.reveal(with: .up,
-        //                                         duration: 0.5)
-        //        let crossFade = SKTransition.crossFade(withDuration: 0.5)
-        self.view?.presentScene(zone23)
-    }
-    
-    // 32の画面を開く
-    func openZone32()
-    {
-        self.removeAllChildren()
+        if IsFullcourt_now {
+            fullcourtIcon.alpha = 1
+            halfcourtIcon.alpha = 0.3
+        } else {
+            fullcourtIcon.alpha = 0.3
+            halfcourtIcon.alpha = 1
+        }
         
-        let zone32 = Zone32(size: self.size)
-        self.view?.presentScene(zone32)
+        lineThick_now == 2 ? (smallLineIcon.alpha = 1) : (smallLineIcon.alpha = 0.3)
+        lineThick_now == 4 ? (mediumLineIcon.alpha = 1) : (mediumLineIcon.alpha = 0.3)
+        lineThick_now == 6 ? (largeLineIcon.alpha = 1) : (largeLineIcon.alpha = 0.3)
+        
+        lineColor_now == UIColor.gray ? (grayLineIcon.alpha = 1) : (grayLineIcon.alpha = 0.3)
+        lineColor_now == UIColor.orange ? (orangeLineIcon.alpha = 1) : (orangeLineIcon.alpha = 0.3)
+        lineColor_now == UIColor.red ? (redLineIcon.alpha = 1) : (redLineIcon.alpha = 0.3)
+        
+        playerNum_now == 3 ? (threePlayerIcon.alpha = 1) : (threePlayerIcon.alpha = 0.3)
+        playerNum_now == 5 ? (fivePlayerIcon.alpha = 1) : (fivePlayerIcon.alpha = 0.3)
+        
     }
     
     func getBackgroundNode() -> SKSpriteNode{
         // determine screen size
         let background: SKSpriteNode?
         
-        switch (screenHeight)
-        {
-        case 480: // iPhone 4s
+        if screenHeight <= 736 {
             background = SKSpriteNode(imageNamed: "fullcourt_back")
-        case 568: // iPhone 5s
-            background = SKSpriteNode(imageNamed: "fullcourt_back")
-        case 667: // iPhone 8
-            background = SKSpriteNode(imageNamed: "fullcourt_back")
-        case 736: // iPhone 8 Plus
-            background = SKSpriteNode(imageNamed: "fullcourt_back")
-        case 812: // iPhone X
+        } else if screenHeight < 1024 {
             background = SKSpriteNode(imageNamed: "fullcourt_iphonex_back")
-        case 1024: // iPad
-            background = SKSpriteNode(imageNamed: "fullcourt_ipad_back")
-        default: // iPad
+        } else {
             background = SKSpriteNode(imageNamed: "fullcourt_ipad_back")
         }
         

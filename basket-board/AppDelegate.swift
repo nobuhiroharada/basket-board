@@ -22,6 +22,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userDefaults.setColor(color: UIColor.gray, forKey: "lineColor")
         }
         
+        // lineThick がなかったら、デフォルトは medium (4)
+        if !userDefaults.contains(key: "lineThick") {
+            userDefaults.set(4, forKey: "lineThick")
+        }
+        
+        // court がなかったら、デフォルトは fullcourt
+        if !userDefaults.contains(key: "isFullcourt") {
+            userDefaults.set(true, forKey: "isFullcourt")
+        }
+        
+        // playerNum がなかったら、デフォルトは 5人
+        if !userDefaults.contains(key: "playerNum") {
+            userDefaults.set(5, forKey: "playerNum")
+        }
+        
         return true
     }
     
