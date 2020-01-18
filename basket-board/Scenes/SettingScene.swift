@@ -125,12 +125,12 @@ class SettingScene: SKScene {
     
     func iconOpacityControl()
     {
-        let IsFullcourt_now = userDefaults.bool(forKey: "isFullcourt")
-        let lineThick_now = userDefaults.integer(forKey: "lineThick")
-        let lineColor_now = userDefaults.colorForKey(key: "lineColor")!
-        let playerNum_now = userDefaults.integer(forKey: "playerNum")
+        let currentCourtType = userDefaults.bool(forKey: "isFullcourt")
+        let currentLineThick = userDefaults.integer(forKey: "lineThick")
+        let currentlineColor = userDefaults.colorForKey(key: "lineColor")!
+        let currentPlayerNum = userDefaults.integer(forKey: "playerNum")
         
-        if IsFullcourt_now {
+        if currentCourtType {
             Objects.fullcourtIcon.alpha = 1
             Objects.halfcourtIcon.alpha = 0.3
         } else {
@@ -138,16 +138,16 @@ class SettingScene: SKScene {
             Objects.halfcourtIcon.alpha = 1
         }
         
-        lineThick_now == 2 ? (Objects.smallLineIcon.alpha = 1) : (Objects.smallLineIcon.alpha = 0.3)
-        lineThick_now == 4 ? (Objects.mediumLineIcon.alpha = 1) : (Objects.mediumLineIcon.alpha = 0.3)
-        lineThick_now == 6 ? (Objects.largeLineIcon.alpha = 1) : (Objects.largeLineIcon.alpha = 0.3)
+        currentLineThick == 2 ? (Objects.smallLineIcon.alpha = 1) : (Objects.smallLineIcon.alpha = 0.3)
+        currentLineThick == 4 ? (Objects.mediumLineIcon.alpha = 1) : (Objects.mediumLineIcon.alpha = 0.3)
+        currentLineThick == 6 ? (Objects.largeLineIcon.alpha = 1) : (Objects.largeLineIcon.alpha = 0.3)
         
-        lineColor_now == UIColor.gray ? (Objects.grayLineIcon.alpha = 1) : (Objects.grayLineIcon.alpha = 0.3)
-        lineColor_now == UIColor.orange ? (Objects.orangeLineIcon.alpha = 1) : (Objects.orangeLineIcon.alpha = 0.3)
-        lineColor_now == UIColor.red ? (Objects.redLineIcon.alpha = 1) : (Objects.redLineIcon.alpha = 0.3)
+        currentlineColor == UIColor.gray ? (Objects.grayLineIcon.alpha = 1) : (Objects.grayLineIcon.alpha = 0.3)
+        currentlineColor == UIColor.orange ? (Objects.orangeLineIcon.alpha = 1) : (Objects.orangeLineIcon.alpha = 0.3)
+        currentlineColor == UIColor.red ? (Objects.redLineIcon.alpha = 1) : (Objects.redLineIcon.alpha = 0.3)
         
-        playerNum_now == 3 ? (Objects.threePlayerIcon.alpha = 1) : (Objects.threePlayerIcon.alpha = 0.3)
-        playerNum_now == 5 ? (Objects.fivePlayerIcon.alpha = 1) : (Objects.fivePlayerIcon.alpha = 0.3)
+        currentPlayerNum == 3 ? (Objects.threePlayerIcon.alpha = 1) : (Objects.threePlayerIcon.alpha = 0.3)
+        currentPlayerNum == 5 ? (Objects.fivePlayerIcon.alpha = 1) : (Objects.fivePlayerIcon.alpha = 0.3)
         
     }
     
