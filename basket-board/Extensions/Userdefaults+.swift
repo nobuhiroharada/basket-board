@@ -22,11 +22,11 @@ extension UserDefaults {
         set(colorData, forKey: key)
     }
     
-    func colorForKey(key: String) -> UIColor? {
+    func colorForKey(key: String) -> UIColor {
         var color: UIColor?
         if let colorData = data(forKey: key) {
             color = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(colorData) as? UIColor
         }
-        return color
+        return color ?? .red
     }
 }

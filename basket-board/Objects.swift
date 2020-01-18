@@ -10,18 +10,18 @@ import Foundation
 
 struct Objects {
     
-    static let ball: PlayerBallNode = PlayerBallNode(imageNamed: "ball")
+    static let ball: BallNode = BallNode(imageNamed: "ball")
     
-    static let playerA0: PlayerBallNode = PlayerBallNode(imageNamed: "playerA1")
-    static let playerA1: PlayerBallNode = PlayerBallNode(imageNamed: "playerA2")
-    static let playerA2: PlayerBallNode = PlayerBallNode(imageNamed: "playerA3")
-    static let playerA3: PlayerBallNode = PlayerBallNode(imageNamed: "playerA4")
-    static let playerA4: PlayerBallNode = PlayerBallNode(imageNamed: "playerA5")
-    static let playerB0: PlayerBallNode = PlayerBallNode(imageNamed: "playerB1")
-    static let playerB1: PlayerBallNode = PlayerBallNode(imageNamed: "playerB2")
-    static let playerB2: PlayerBallNode = PlayerBallNode(imageNamed: "playerB3")
-    static let playerB3: PlayerBallNode = PlayerBallNode(imageNamed: "playerB4")
-    static let playerB4: PlayerBallNode = PlayerBallNode(imageNamed: "playerB5")
+    static let playerA0: PlayerNode = PlayerNode(imageNamed: "playerA1")
+    static let playerA1: PlayerNode = PlayerNode(imageNamed: "playerA2")
+    static let playerA2: PlayerNode = PlayerNode(imageNamed: "playerA3")
+    static let playerA3: PlayerNode = PlayerNode(imageNamed: "playerA4")
+    static let playerA4: PlayerNode = PlayerNode(imageNamed: "playerA5")
+    static let playerB0: PlayerNode = PlayerNode(imageNamed: "playerB1")
+    static let playerB1: PlayerNode = PlayerNode(imageNamed: "playerB2")
+    static let playerB2: PlayerNode = PlayerNode(imageNamed: "playerB3")
+    static let playerB3: PlayerNode = PlayerNode(imageNamed: "playerB4")
+    static let playerB4: PlayerNode = PlayerNode(imageNamed: "playerB5")
  
     static let eraser:   BarItemNode = BarItemNode(imageNamed: "eraser")
     static let rewind:   BarItemNode = BarItemNode(imageNamed: "rewind")

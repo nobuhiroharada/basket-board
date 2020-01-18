@@ -18,9 +18,9 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
     
     var device: Device?
     
-    var activePlayers:  Array = [PlayerBallNode]()
-    var playerAs: Array = [PlayerBallNode]()
-    var playerBs: Array = [PlayerBallNode]()
+    var activePlayers:  Array = [PlayerNode]()
+    var playerAs: Array = [PlayerNode]()
+    var playerBs: Array = [PlayerNode]()
     
     let scaleBig    = SKAction.scale(to: 1.2, duration: 0.1)
     let scaleOrigin = SKAction.scale(to: 1.0, duration: 0.1)
@@ -30,7 +30,7 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
     var lineNum: Int = 0
     var lineArray: Array = [String?]()
     var mode: Mode?
-    var playerNum: Int?
+    var playerNum: Int = 5
     
     var isDrawerOpen: Bool = false
     
@@ -54,11 +54,11 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
             viewPadding = 30
         }
         
-        playerNum = userDefaults.integer(forKey: "playerNum")
+        playerNum = userDefaults.integer(forKey: Consts.PLAYER_NUM)
         
         setBackground()
         setTabBarItems()
-        setPlayers()
+        setPlayers(playerNum)
         setBall()
         
         self.physicsWorld.gravity = .zero
@@ -185,17 +185,17 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
     {
         for node in nodes
         {
-            if node.name == "playerA0" { self.activePlayers[0].run(action) }
-            else if node.name == "playerA1" { self.activePlayers[1].run(action) }
-            else if node.name == "playerA2" { self.activePlayers[2].run(action) }
-            else if node.name == "playerA3" { self.activePlayers[3].run(action) }
-            else if node.name == "playerA4" { self.activePlayers[4].run(action) }
-            else if node.name == "playerB0" { self.activePlayers[5].run(action) }
-            else if node.name == "playerB1" { self.activePlayers[6].run(action) }
-            else if node.name == "playerB2" { self.activePlayers[7].run(action) }
-            else if node.name == "playerB3" { self.activePlayers[8].run(action) }
-            else if node.name == "playerB4" { self.activePlayers[9].run(action) }
-            else if node.name == "ball" { Objects.ball.run(action) }
+            if node.name == Consts.PLAYER_A0 { self.activePlayers[0].run(action) }
+            else if node.name == Consts.PLAYER_A1 { self.activePlayers[1].run(action) }
+            else if node.name == Consts.PLAYER_A2 { self.activePlayers[2].run(action) }
+            else if node.name == Consts.PLAYER_A3 { self.activePlayers[3].run(action) }
+            else if node.name == Consts.PLAYER_A4 { self.activePlayers[4].run(action) }
+            else if node.name == Consts.PLAYER_B0 { self.activePlayers[5].run(action) }
+            else if node.name == Consts.PLAYER_B1 { self.activePlayers[6].run(action) }
+            else if node.name == Consts.PLAYER_B2 { self.activePlayers[7].run(action) }
+            else if node.name == Consts.PLAYER_B3 { self.activePlayers[8].run(action) }
+            else if node.name == Consts.PLAYER_B4 { self.activePlayers[9].run(action) }
+            else if node.name == Consts.BALL { Objects.ball.run(action) }
         }
     }
     
@@ -203,13 +203,13 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
     {
         for node in nodes
         {
-            if node.name == "playerA0" { self.activePlayers[0].run(action) }
-            else if node.name == "playerA1" { self.activePlayers[1].run(action) }
-            else if node.name == "playerA2" { self.activePlayers[2].run(action) }
-            else if node.name == "playerB0" { self.activePlayers[3].run(action) }
-            else if node.name == "playerB1" { self.activePlayers[4].run(action) }
-            else if node.name == "playerB2" { self.activePlayers[5].run(action) }
-            else if node.name == "ball" { Objects.ball.run(action) }
+            if node.name == Consts.PLAYER_A0 { self.activePlayers[0].run(action) }
+            else if node.name == Consts.PLAYER_A1 { self.activePlayers[1].run(action) }
+            else if node.name == Consts.PLAYER_A2 { self.activePlayers[2].run(action) }
+            else if node.name == Consts.PLAYER_B0 { self.activePlayers[3].run(action) }
+            else if node.name == Consts.PLAYER_B1 { self.activePlayers[4].run(action) }
+            else if node.name == Consts.PLAYER_B2 { self.activePlayers[5].run(action) }
+            else if node.name == Consts.BALL { Objects.ball.run(action) }
         }
     }
     
@@ -227,8 +227,8 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         startPoint = pointInDrawing
         let shape = SKShapeNode()
         shape.path = path
-        shape.strokeColor = userDefaults.colorForKey(key: "lineColor")!
-        shape.lineWidth = CGFloat(userDefaults.integer(forKey: "lineThick"))
+        shape.strokeColor = userDefaults.colorForKey(key: Consts.LINE_COLOR)
+        shape.lineWidth = CGFloat(userDefaults.integer(forKey: Consts.LINE_THICK))
         shape.name = "line\(lineNum)"
         self.addChild(shape)
     }
@@ -319,25 +319,28 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
     func setBackground() {
         
         var background: SKSpriteNode?
-        let isFullCourt = userDefaults.bool(forKey: "isFullcourt")
+        let courtType = userDefaults.integer(forKey: Consts.COURT_TYPE)
         
         switch device! {
         case .IPHONE:
-            if isFullCourt {
+            if courtType == 1 {
                 background = SKSpriteNode(imageNamed: "fullcourt")
-            } else {
+            }
+            else if courtType == 2 {
                 background = SKSpriteNode(imageNamed: "halfcourt")
             }
         case .IPHONEX:
-            if isFullCourt {
+            if courtType == 1 {
                 background = SKSpriteNode(imageNamed: "fullcourt_iphonex")
-            } else {
+            }
+            else if courtType == 2 {
                 background = SKSpriteNode(imageNamed: "halfcourt_iphonex")
             }
         case .IPAD:
-            if isFullCourt {
+            if courtType == 1 {
                 background = SKSpriteNode(imageNamed: "fullcourt_ipad")
-            } else {
+            }
+            else if courtType == 2 {
                 background = SKSpriteNode(imageNamed: "halfcourt_ipad")
             }
         }
@@ -400,9 +403,9 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func setPlayers() {
+    func setPlayers(_ playerNum: Int) {
         
-        let playerNum = userDefaults.integer(forKey: "playerNum")
+//        let playerNum = userDefaults.integer(forKey: Consts.PLAYER_NUM)
         
         if playerNum == 3 {
             playerAs = [Objects.playerA0,Objects.playerA1,Objects.playerA2]
@@ -434,7 +437,7 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         
         Objects.ball.position = CGPoint(x: viewPadding!, y: Int(viewSize!.height*0.5))
         Objects.ball.size = nodeSize!
-        Objects.ball.name = "ball"
+        Objects.ball.name = Consts.BALL
         self.addChild(Objects.ball)
         
     }

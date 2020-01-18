@@ -54,61 +54,61 @@ class SettingScene: SKScene {
         }
         else if nodes.contains(Objects.fullcourtIcon)
         {
-            userDefaults.set(true, forKey: "isFullcourt")
+            userDefaults.set(1, forKey: Consts.COURT_TYPE)
             userDefaults.synchronize()
             iconOpacityControl()
         }
         else if nodes.contains(Objects.halfcourtIcon)
         {
-            userDefaults.set(false, forKey: "isFullcourt")
+            userDefaults.set(2, forKey: Consts.COURT_TYPE)
             userDefaults.synchronize()
             iconOpacityControl()
         }
         else if nodes.contains(Objects.smallLineIcon)
         {
-            userDefaults.set(2, forKey: "lineThick")
+            userDefaults.set(2, forKey: Consts.LINE_THICK)
             userDefaults.synchronize()
             iconOpacityControl()
         }
         else if nodes.contains(Objects.mediumLineIcon)
         {
-            userDefaults.set(4, forKey: "lineThick")
+            userDefaults.set(4, forKey: Consts.LINE_THICK)
             userDefaults.synchronize()
             iconOpacityControl()
         }
         else if nodes.contains(Objects.largeLineIcon)
         {
-            userDefaults.set(6, forKey: "lineThick")
+            userDefaults.set(6, forKey: Consts.LINE_THICK)
             userDefaults.synchronize()
             iconOpacityControl()
         }
         else if nodes.contains(Objects.grayLineIcon)
         {
-            userDefaults.setColor(color: UIColor.gray, forKey: "lineColor")
+            userDefaults.setColor(color: UIColor.gray, forKey: Consts.LINE_COLOR)
             userDefaults.synchronize()
             iconOpacityControl()
         }
         else if nodes.contains(Objects.orangeLineIcon)
         {
-            userDefaults.setColor(color: UIColor.orange, forKey: "lineColor")
+            userDefaults.setColor(color: UIColor.orange, forKey: Consts.LINE_COLOR)
             userDefaults.synchronize()
             iconOpacityControl()
         }
         else if nodes.contains(Objects.redLineIcon)
         {
-            userDefaults.setColor(color: UIColor.red, forKey: "lineColor")
+            userDefaults.setColor(color: UIColor.red, forKey: Consts.LINE_COLOR)
             userDefaults.synchronize()
             iconOpacityControl()
         }
         else if nodes.contains(Objects.threePlayerIcon)
         {
-            userDefaults.set(3, forKey: "playerNum")
+            userDefaults.set(3, forKey: Consts.PLAYER_NUM)
             userDefaults.synchronize()
             iconOpacityControl()
         }
         else if nodes.contains(Objects.fivePlayerIcon)
         {
-            userDefaults.set(5, forKey: "playerNum")
+            userDefaults.set(5, forKey: Consts.PLAYER_NUM)
             userDefaults.synchronize()
             iconOpacityControl()
         }
@@ -125,15 +125,16 @@ class SettingScene: SKScene {
     
     func iconOpacityControl()
     {
-        let currentCourtType = userDefaults.bool(forKey: "isFullcourt")
-        let currentLineThick = userDefaults.integer(forKey: "lineThick")
-        let currentlineColor = userDefaults.colorForKey(key: "lineColor")!
+        let currentCourtType = userDefaults.integer(forKey: Consts.COURT_TYPE)
+        let currentLineThick = userDefaults.integer(forKey: Consts.LINE_THICK)
+        let currentlineColor = userDefaults.colorForKey(key: Consts.LINE_COLOR)
         let currentPlayerNum = userDefaults.integer(forKey: "playerNum")
         
-        if currentCourtType {
+        if currentCourtType == 1 {
             Objects.fullcourtIcon.alpha = 1
             Objects.halfcourtIcon.alpha = 0.3
-        } else {
+        }
+        else if currentCourtType == 2 {
             Objects.fullcourtIcon.alpha = 0.3
             Objects.halfcourtIcon.alpha = 1
         }
@@ -183,7 +184,7 @@ class SettingScene: SKScene {
     
     func setLineIcon() {
         
-        let lineThick = userDefaults.integer(forKey: "lineThick")
+        let lineThick = userDefaults.integer(forKey: Consts.LINE_THICK)
         
         Objects.smallLineIcon.position = CGPoint(x: viewSize!.width*0.25, y: viewSize!.height-250)
         Objects.smallLineIcon.name = "smallLine"

@@ -1,15 +1,15 @@
 //
-//  PlayerBallNode.swift
+//  BallNode.swift
 //  basket-board
 //
-//  Created by Nobuhiro Harada on 2018/09/29.
-//  Copyright © 2018年 Nobuhiro Harada. All rights reserved.
+//  Created by Nobuhiro Harada on 2020/01/18.
+//  Copyright © 2020 Nobuhiro Harada. All rights reserved.
 //
 
 import Foundation
 import SpriteKit
 
-class PlayerBallNode: SKSpriteNode {
+class BallNode: SKSpriteNode {
     
     var radius: CGFloat?
     
