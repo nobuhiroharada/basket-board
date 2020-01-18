@@ -14,20 +14,31 @@ class SettingScene: SKScene {
     let screenHeight = UIScreen.main.bounds.size.height
     
     var backButton: SKSpriteNode = SKSpriteNode(imageNamed: "back")
-        
-    var viewSize: CGSize?
+    
+    let fullcourtIcon: SettingIconNode = SettingIconNode(imageNamed: "fullcourt_icon")
+    let halfcourtIcon: SettingIconNode = SettingIconNode(imageNamed: "halfcourt_icon")
+    
+    let smallLineIcon:  SettingIconNode = SettingIconNode(imageNamed: "smallLine")
+    let mediumLineIcon: SettingIconNode = SettingIconNode(imageNamed: "mediumLine")
+    let largeLineIcon:  SettingIconNode = SettingIconNode(imageNamed: "largeLine")
+    
+    let grayLineIcon:   SettingIconNode = SettingIconNode(imageNamed: "grayLine")
+    let orangeLineIcon: SettingIconNode = SettingIconNode(imageNamed: "orangeLine")
+    let redLineIcon:    SettingIconNode = SettingIconNode(imageNamed: "redLine")
+    
+    let threePlayerIcon: SettingIconNode = SettingIconNode(imageNamed: "three_player")
+    let fivePlayerIcon:  SettingIconNode = SettingIconNode(imageNamed: "five_player")
         
     override init(size: CGSize) {
         super.init(size: size)
         
-        viewSize = size
         setBackgroundNode()
         setCourtIcon()
         setLineIcon()
         setColorIcon()
         setPlayerNumIcon()
         
-        backButton.position = CGPoint(x: viewSize!.width*0.25, y: viewSize!.height-50)
+        backButton.position = CGPoint(x: self.size.width*0.25, y: self.size.height-50)
         backButton.size = CGSize(width: 100, height: 50)
         self.addChild(backButton)
         
@@ -52,61 +63,61 @@ class SettingScene: SKScene {
         {
             goBack()
         }
-        else if nodes.contains(Objects.fullcourtIcon)
+        else if nodes.contains(fullcourtIcon)
         {
             userDefaults.set(1, forKey: Consts.COURT_TYPE)
             userDefaults.synchronize()
             iconOpacityControl()
         }
-        else if nodes.contains(Objects.halfcourtIcon)
+        else if nodes.contains(halfcourtIcon)
         {
             userDefaults.set(2, forKey: Consts.COURT_TYPE)
             userDefaults.synchronize()
             iconOpacityControl()
         }
-        else if nodes.contains(Objects.smallLineIcon)
+        else if nodes.contains(smallLineIcon)
         {
             userDefaults.set(2, forKey: Consts.LINE_THICK)
             userDefaults.synchronize()
             iconOpacityControl()
         }
-        else if nodes.contains(Objects.mediumLineIcon)
+        else if nodes.contains(mediumLineIcon)
         {
             userDefaults.set(4, forKey: Consts.LINE_THICK)
             userDefaults.synchronize()
             iconOpacityControl()
         }
-        else if nodes.contains(Objects.largeLineIcon)
+        else if nodes.contains(largeLineIcon)
         {
             userDefaults.set(6, forKey: Consts.LINE_THICK)
             userDefaults.synchronize()
             iconOpacityControl()
         }
-        else if nodes.contains(Objects.grayLineIcon)
+        else if nodes.contains(grayLineIcon)
         {
             userDefaults.setColor(color: UIColor.gray, forKey: Consts.LINE_COLOR)
             userDefaults.synchronize()
             iconOpacityControl()
         }
-        else if nodes.contains(Objects.orangeLineIcon)
+        else if nodes.contains(orangeLineIcon)
         {
             userDefaults.setColor(color: UIColor.orange, forKey: Consts.LINE_COLOR)
             userDefaults.synchronize()
             iconOpacityControl()
         }
-        else if nodes.contains(Objects.redLineIcon)
+        else if nodes.contains(redLineIcon)
         {
             userDefaults.setColor(color: UIColor.red, forKey: Consts.LINE_COLOR)
             userDefaults.synchronize()
             iconOpacityControl()
         }
-        else if nodes.contains(Objects.threePlayerIcon)
+        else if nodes.contains(threePlayerIcon)
         {
             userDefaults.set(3, forKey: Consts.PLAYER_NUM)
             userDefaults.synchronize()
             iconOpacityControl()
         }
-        else if nodes.contains(Objects.fivePlayerIcon)
+        else if nodes.contains(fivePlayerIcon)
         {
             userDefaults.set(5, forKey: Consts.PLAYER_NUM)
             userDefaults.synchronize()
@@ -131,24 +142,24 @@ class SettingScene: SKScene {
         let currentPlayerNum = userDefaults.integer(forKey: "playerNum")
         
         if currentCourtType == 1 {
-            Objects.fullcourtIcon.alpha = 1
-            Objects.halfcourtIcon.alpha = 0.3
+            fullcourtIcon.alpha = 1
+            halfcourtIcon.alpha = 0.3
         }
         else if currentCourtType == 2 {
-            Objects.fullcourtIcon.alpha = 0.3
-            Objects.halfcourtIcon.alpha = 1
+            fullcourtIcon.alpha = 0.3
+            halfcourtIcon.alpha = 1
         }
         
-        currentLineThick == 2 ? (Objects.smallLineIcon.alpha = 1) : (Objects.smallLineIcon.alpha = 0.3)
-        currentLineThick == 4 ? (Objects.mediumLineIcon.alpha = 1) : (Objects.mediumLineIcon.alpha = 0.3)
-        currentLineThick == 6 ? (Objects.largeLineIcon.alpha = 1) : (Objects.largeLineIcon.alpha = 0.3)
+        currentLineThick == 2 ? (smallLineIcon.alpha = 1) : (smallLineIcon.alpha = 0.3)
+        currentLineThick == 4 ? (mediumLineIcon.alpha = 1) : (mediumLineIcon.alpha = 0.3)
+        currentLineThick == 6 ? (largeLineIcon.alpha = 1) : (largeLineIcon.alpha = 0.3)
         
-        currentlineColor == UIColor.gray ? (Objects.grayLineIcon.alpha = 1) : (Objects.grayLineIcon.alpha = 0.3)
-        currentlineColor == UIColor.orange ? (Objects.orangeLineIcon.alpha = 1) : (Objects.orangeLineIcon.alpha = 0.3)
-        currentlineColor == UIColor.red ? (Objects.redLineIcon.alpha = 1) : (Objects.redLineIcon.alpha = 0.3)
+        currentlineColor == UIColor.gray ? (grayLineIcon.alpha = 1) : (grayLineIcon.alpha = 0.3)
+        currentlineColor == UIColor.orange ? (orangeLineIcon.alpha = 1) : (orangeLineIcon.alpha = 0.3)
+        currentlineColor == UIColor.red ? (redLineIcon.alpha = 1) : (redLineIcon.alpha = 0.3)
         
-        currentPlayerNum == 3 ? (Objects.threePlayerIcon.alpha = 1) : (Objects.threePlayerIcon.alpha = 0.3)
-        currentPlayerNum == 5 ? (Objects.fivePlayerIcon.alpha = 1) : (Objects.fivePlayerIcon.alpha = 0.3)
+        currentPlayerNum == 3 ? (threePlayerIcon.alpha = 1) : (threePlayerIcon.alpha = 0.3)
+        currentPlayerNum == 5 ? (fivePlayerIcon.alpha = 1) : (fivePlayerIcon.alpha = 0.3)
         
     }
     
@@ -165,75 +176,75 @@ class SettingScene: SKScene {
         }
         
         if let background = background {
-            background.position = CGPoint(x: viewSize!.width*0.5, y: viewSize!.height*0.5)
-            background.size = CGSize(width: size.width, height: size.height*2)
+            background.position = CGPoint(x: self.size.width*0.5, y: self.size.height*0.5)
+            background.size = CGSize(width: self.size.width, height: self.size.height*2)
             self.addChild(background)
         }
     }
     
     func setCourtIcon() {
         
-        Objects.fullcourtIcon.position = CGPoint(x: viewSize!.width*0.25, y: viewSize!.height-150)
-        Objects.fullcourtIcon.name = "fullcourtBack"
-        self.addChild(Objects.fullcourtIcon)
+        fullcourtIcon.position = CGPoint(x: self.size.width*0.25, y: self.size.height-150)
+        fullcourtIcon.name = "fullcourtBack"
+        self.addChild(fullcourtIcon)
         
-        Objects.halfcourtIcon.position = CGPoint(x: viewSize!.width*0.50, y: viewSize!.height-150)
-        Objects.halfcourtIcon.name = "halfcourtBack"
-        self.addChild(Objects.halfcourtIcon)
+        halfcourtIcon.position = CGPoint(x: self.size.width*0.50, y: self.size.height-150)
+        halfcourtIcon.name = "halfcourtBack"
+        self.addChild(halfcourtIcon)
     }
     
     func setLineIcon() {
         
         let lineThick = userDefaults.integer(forKey: Consts.LINE_THICK)
         
-        Objects.smallLineIcon.position = CGPoint(x: viewSize!.width*0.25, y: viewSize!.height-250)
-        Objects.smallLineIcon.name = "smallLine"
-        Objects.smallLineIcon.alpha = 0.3
+        smallLineIcon.position = CGPoint(x: self.size.width*0.25, y: self.size.height-250)
+        smallLineIcon.name = "smallLine"
+        smallLineIcon.alpha = 0.3
         if lineThick == 2 {
-            Objects.smallLineIcon.alpha = 1
+            smallLineIcon.alpha = 1
         }
-        self.addChild(Objects.smallLineIcon)
+        self.addChild(smallLineIcon)
         
-        Objects.mediumLineIcon.position = CGPoint(x: viewSize!.width*0.50, y: viewSize!.height-250)
-        Objects.mediumLineIcon.name = "mediumLine"
-        Objects.mediumLineIcon.alpha = 0.3
+        mediumLineIcon.position = CGPoint(x: self.size.width*0.50, y: self.size.height-250)
+        mediumLineIcon.name = "mediumLine"
+        mediumLineIcon.alpha = 0.3
         if lineThick == 4 {
-            Objects.mediumLineIcon.alpha = 1
+            mediumLineIcon.alpha = 1
         }
-        self.addChild(Objects.mediumLineIcon)
+        self.addChild(mediumLineIcon)
         
-        Objects.largeLineIcon.position = CGPoint(x: viewSize!.width*0.75, y: viewSize!.height-250)
-        Objects.largeLineIcon.name = "largeLine"
-        Objects.largeLineIcon.alpha = 0.3
+        largeLineIcon.position = CGPoint(x: self.size.width*0.75, y: self.size.height-250)
+        largeLineIcon.name = "largeLine"
+        largeLineIcon.alpha = 0.3
         if lineThick == 6 {
-            Objects.largeLineIcon.alpha = 1
+            largeLineIcon.alpha = 1
         }
-        self.addChild(Objects.largeLineIcon)
+        self.addChild(largeLineIcon)
     }
     
     func setColorIcon() {
         
-        Objects.grayLineIcon.position = CGPoint(x: viewSize!.width*0.25, y: viewSize!.height-350)
-        Objects.grayLineIcon.name = "grayLine"
-        self.addChild(Objects.grayLineIcon)
+        grayLineIcon.position = CGPoint(x: self.size.width*0.25, y: self.size.height-350)
+        grayLineIcon.name = "grayLine"
+        self.addChild(grayLineIcon)
         
-        Objects.orangeLineIcon.position = CGPoint(x: viewSize!.width*0.50, y: viewSize!.height-350)
-        Objects.orangeLineIcon.name = "orangeLine"
-        self.addChild(Objects.orangeLineIcon)
+        orangeLineIcon.position = CGPoint(x: self.size.width*0.50, y: self.size.height-350)
+        orangeLineIcon.name = "orangeLine"
+        self.addChild(orangeLineIcon)
         
-        Objects.redLineIcon.position = CGPoint(x: viewSize!.width*0.75, y: viewSize!.height-350)
-        Objects.redLineIcon.name = "redLine"
-        self.addChild(Objects.redLineIcon)
+        redLineIcon.position = CGPoint(x: self.size.width*0.75, y: self.size.height-350)
+        redLineIcon.name = "redLine"
+        self.addChild(redLineIcon)
     }
     
     func setPlayerNumIcon() {
         
-        Objects.threePlayerIcon.position = CGPoint(x: viewSize!.width*0.25, y: viewSize!.height-450)
-        Objects.threePlayerIcon.name = "threePlayer"
-        self.addChild(Objects.threePlayerIcon)
+        threePlayerIcon.position = CGPoint(x: self.size.width*0.25, y: self.size.height-450)
+        threePlayerIcon.name = "threePlayer"
+        self.addChild(threePlayerIcon)
         
-        Objects.fivePlayerIcon.position = CGPoint(x: viewSize!.width*0.50, y: viewSize!.height-450)
-        Objects.fivePlayerIcon.name = "fivePlayer"
-        self.addChild(Objects.fivePlayerIcon)
+        fivePlayerIcon.position = CGPoint(x: self.size.width*0.50, y: self.size.height-450)
+        fivePlayerIcon.name = "fivePlayer"
+        self.addChild(fivePlayerIcon)
     }
 }

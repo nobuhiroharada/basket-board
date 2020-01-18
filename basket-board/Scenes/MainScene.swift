@@ -10,7 +10,6 @@ import SpriteKit
 
 class MainScene: SKScene, SKPhysicsContactDelegate {
     
-    var viewSize: CGSize?
     var viewPadding: Int?
     
     var nodeSize: CGSize?
@@ -33,6 +32,25 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
     var playerNum: Int = 5
     
     var isDrawerOpen: Bool = false
+    
+    let ball: BallNode = BallNode(imageNamed: "ball")
+    
+    let playerA0: PlayerNode = PlayerNode(imageNamed: "playerA1")
+    let playerA1: PlayerNode = PlayerNode(imageNamed: "playerA2")
+    let playerA2: PlayerNode = PlayerNode(imageNamed: "playerA3")
+    let playerA3: PlayerNode = PlayerNode(imageNamed: "playerA4")
+    let playerA4: PlayerNode = PlayerNode(imageNamed: "playerA5")
+    let playerB0: PlayerNode = PlayerNode(imageNamed: "playerB1")
+    let playerB1: PlayerNode = PlayerNode(imageNamed: "playerB2")
+    let playerB2: PlayerNode = PlayerNode(imageNamed: "playerB3")
+    let playerB3: PlayerNode = PlayerNode(imageNamed: "playerB4")
+    let playerB4: PlayerNode = PlayerNode(imageNamed: "playerB5")
+    
+    let eraser:   BarItemNode = BarItemNode(imageNamed: "eraser")
+    let rewind:   BarItemNode = BarItemNode(imageNamed: "rewind")
+    let reset:    BarItemNode = BarItemNode(imageNamed: "reset")
+    let setting:  BarItemNode = BarItemNode(imageNamed: "othersSetting")
+    let drawer:   BarItemNode = BarItemNode(imageNamed: "drawer")
     
     override init(size: CGSize) {
         super.init(size: size)
@@ -63,7 +81,7 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         
         self.physicsWorld.gravity = .zero
         self.physicsWorld.contactDelegate = self
-        self.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: viewSize!.width, height: viewSize!.height))
+        self.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
         
     }
     
@@ -82,17 +100,17 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         let location = touch.location(in: self)
         let nodes = self.nodes(at: location)
         
-        if nodes.contains(Objects.ball)
-            || nodes.contains(Objects.playerA0)
-            || nodes.contains(Objects.playerA1)
-            || nodes.contains(Objects.playerA2)
-            || nodes.contains(Objects.playerA3)
-            || nodes.contains(Objects.playerA4)
-            || nodes.contains(Objects.playerB0)
-            || nodes.contains(Objects.playerB1)
-            || nodes.contains(Objects.playerB2)
-            || nodes.contains(Objects.playerB3)
-            || nodes.contains(Objects.playerB4)
+        if nodes.contains(ball)
+            || nodes.contains(playerA0)
+            || nodes.contains(playerA1)
+            || nodes.contains(playerA2)
+            || nodes.contains(playerA3)
+            || nodes.contains(playerA4)
+            || nodes.contains(playerB0)
+            || nodes.contains(playerB1)
+            || nodes.contains(playerB2)
+            || nodes.contains(playerB3)
+            || nodes.contains(playerB4)
         {
             if playerNum == 5 {
                 addAction_5players(nodes, scaleBig)
@@ -102,11 +120,11 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
             
             mode = .Move
         }
-//        else if nodes.contains(Objects.drawer) { openDrawer() }
-        else if nodes.contains(Objects.eraser) { deleteLine() }
-        else if nodes.contains(Objects.rewind) { deleteOneBeforeLine() }
-        else if nodes.contains(Objects.reset) { doReset() }
-        else if nodes.contains(Objects.setting) { openSettingScene() }
+//        else if nodes.contains(drawer) { openDrawer() }
+        else if nodes.contains(eraser) { deleteLine() }
+        else if nodes.contains(rewind) { deleteOneBeforeLine() }
+        else if nodes.contains(reset) { doReset() }
+        else if nodes.contains(setting) { openSettingScene() }
         else { mode = .Draw }
     }
     
@@ -121,17 +139,17 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         let action = SKAction.move(to: location, duration: 0)
         
         if mode == .Move {
-            if nodes.contains(Objects.ball)
-                || nodes.contains(Objects.playerA0)
-                || nodes.contains(Objects.playerA1)
-                || nodes.contains(Objects.playerA2)
-                || nodes.contains(Objects.playerA3)
-                || nodes.contains(Objects.playerA4)
-                || nodes.contains(Objects.playerB0)
-                || nodes.contains(Objects.playerB1)
-                || nodes.contains(Objects.playerB2)
-                || nodes.contains(Objects.playerB3)
-                || nodes.contains(Objects.playerB4)
+            if nodes.contains(ball)
+                || nodes.contains(playerA0)
+                || nodes.contains(playerA1)
+                || nodes.contains(playerA2)
+                || nodes.contains(playerA3)
+                || nodes.contains(playerA4)
+                || nodes.contains(playerB0)
+                || nodes.contains(playerB1)
+                || nodes.contains(playerB2)
+                || nodes.contains(playerB3)
+                || nodes.contains(playerB4)
             {
                 if playerNum == 5 {
                     addAction_5players(nodes, action)
@@ -156,17 +174,17 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         let location = touch.location(in: self)
         let nodes = self.nodes(at: location)
         
-        if nodes.contains(Objects.ball)
-            || nodes.contains(Objects.playerA0)
-            || nodes.contains(Objects.playerA1)
-            || nodes.contains(Objects.playerA2)
-            || nodes.contains(Objects.playerA3)
-            || nodes.contains(Objects.playerA4)
-            || nodes.contains(Objects.playerB0)
-            || nodes.contains(Objects.playerB1)
-            || nodes.contains(Objects.playerB2)
-            || nodes.contains(Objects.playerB3)
-            || nodes.contains(Objects.playerB4)
+        if nodes.contains(ball)
+            || nodes.contains(playerA0)
+            || nodes.contains(playerA1)
+            || nodes.contains(playerA2)
+            || nodes.contains(playerA3)
+            || nodes.contains(playerA4)
+            || nodes.contains(playerB0)
+            || nodes.contains(playerB1)
+            || nodes.contains(playerB2)
+            || nodes.contains(playerB3)
+            || nodes.contains(playerB4)
         {
             if playerNum == 5 {
                 addAction_5players(nodes, scaleOrigin)
@@ -195,7 +213,7 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
             else if node.name == Consts.PLAYER_B2 { self.activePlayers[7].run(action) }
             else if node.name == Consts.PLAYER_B3 { self.activePlayers[8].run(action) }
             else if node.name == Consts.PLAYER_B4 { self.activePlayers[9].run(action) }
-            else if node.name == Consts.BALL { Objects.ball.run(action) }
+            else if node.name == Consts.BALL { ball.run(action) }
         }
     }
     
@@ -209,7 +227,7 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
             else if node.name == Consts.PLAYER_B0 { self.activePlayers[3].run(action) }
             else if node.name == Consts.PLAYER_B1 { self.activePlayers[4].run(action) }
             else if node.name == Consts.PLAYER_B2 { self.activePlayers[5].run(action) }
-            else if node.name == Consts.BALL { Objects.ball.run(action) }
+            else if node.name == Consts.BALL { ball.run(action) }
         }
     }
     
@@ -237,23 +255,23 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
 //
 //        if isDrawerOpen {
 //            let hideAction = SKAction.moveBy(x: CGFloat(viewPadding!+Int((nodeSize?.height)!)), y: 0, duration: 0.3)
-//            Objects.reset.run(hideAction)
-//            Objects.eraser.run(hideAction)
-//            Objects.rewind.run(hideAction)
-//            Objects.setting.run(hideAction)
+//            reset.run(hideAction)
+//            eraser.run(hideAction)
+//            rewind.run(hideAction)
+//            setting.run(hideAction)
 //
 //            let rotate = SKAction.rotate(byAngle: CGFloat(.pi / 180 * Double(180)), duration: 0.3)
-//            Objects.drawer.run(rotate)
+//            drawer.run(rotate)
 //            isDrawerOpen.toggle()
 //        } else {
 //            let openAction = SKAction.moveBy(x: -CGFloat(viewPadding!+Int((nodeSize?.height)!)), y: 0, duration: 0.3)
-//            Objects.reset.run(openAction)
-//            Objects.eraser.run(openAction)
-//            Objects.rewind.run(openAction)
-//            Objects.setting.run(openAction)
+//            reset.run(openAction)
+//            eraser.run(openAction)
+//            rewind.run(openAction)
+//            setting.run(openAction)
 //
 //            let rotate = SKAction.rotate(byAngle: CGFloat(.pi / 180 * Double(180)), duration: 0.3)
-//            Objects.drawer.run(rotate)
+//            drawer.run(rotate)
 //            isDrawerOpen.toggle()
 //        }
 //
@@ -298,7 +316,7 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
     func doReset() {
         if isDrawerOpen {
             let rotate = SKAction.rotate(byAngle: CGFloat(.pi / 180 * Double(180)), duration: 0)
-            Objects.drawer.run(rotate)
+            drawer.run(rotate)
         }
         self.removeAllChildren()
         let mainScene = MainScene(size: self.size)
@@ -308,7 +326,7 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
     func openSettingScene(){
         if isDrawerOpen {
             let rotate = SKAction.rotate(byAngle: CGFloat(.pi / 180 * Double(180)), duration: 0)
-            Objects.drawer.run(rotate)
+            drawer.run(rotate)
         }
         self.removeAllChildren()
         let settingScene = SettingScene(size: self.size)
@@ -346,8 +364,8 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if let background = background {
-            background.position = CGPoint(x: viewSize!.width*0.5, y: viewSize!.height*0.5)
-            background.size = viewSize!
+            background.position = CGPoint(x: self.size.width*0.5, y: self.size.height*0.5)
+            background.size = self.size
             self.addChild(background)
         }
         
@@ -355,48 +373,48 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
     
     func setTabBarItems() {
         
-//        Objects.drawer.position = CGPoint(x: Int(viewSize!.width-((nodeSize?.width)!)), y: viewPadding!)
-//        Objects.drawer.size = nodeSize!
-//        Objects.drawer.name = "drawer"
-//        self.addChild(Objects.drawer)
+//        drawer.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)), y: viewPadding!)
+//        drawer.size = nodeSize!
+//        drawer.name = "drawer"
+//        self.addChild(drawer)
         
-//        Objects.rewind.position = CGPoint(x: Int(viewSize!.width+((nodeSize?.width)!)), y: viewPadding!+(viewPadding!+Int((nodeSize?.height)!))*3)
-//        Objects.rewind.size = nodeSize!
-//        Objects.rewind.name = "rewind"
-//        self.addChild(Objects.rewind)
+//        rewind.position = CGPoint(x: Int(self.size.width+((nodeSize?.width)!)), y: viewPadding!+(viewPadding!+Int((nodeSize?.height)!))*3)
+//        rewind.size = nodeSize!
+//        rewind.name = "rewind"
+//        self.addChild(rewind)
         
         switch device! {
         case .IPHONE, .IPHONEX:
-            Objects.eraser.position = CGPoint(x: Int(viewSize!.width-((nodeSize?.width)!)*5), y: viewPadding!+10)
-            Objects.eraser.size = nodeSize!
-            Objects.eraser.name = "eraser"
-            self.addChild(Objects.eraser)
+            eraser.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)*5), y: viewPadding!+10)
+            eraser.size = nodeSize!
+            eraser.name = "eraser"
+            self.addChild(eraser)
             
-            Objects.reset.position = CGPoint(x: Int(viewSize!.width-((nodeSize?.width)!)*3), y:viewPadding!+10)
-            Objects.reset.size = nodeSize!
-            Objects.reset.name = "reset"
-            self.addChild(Objects.reset)
+            reset.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)*3), y:viewPadding!+10)
+            reset.size = nodeSize!
+            reset.name = "reset"
+            self.addChild(reset)
             
-            Objects.setting.position = CGPoint(x: Int(viewSize!.width-((nodeSize?.width)!)), y: viewPadding!+10)
-            Objects.setting.size = nodeSize!
-            Objects.setting.name = "othersSetting"
-            self.addChild(Objects.setting)
+            setting.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)), y: viewPadding!+10)
+            setting.size = nodeSize!
+            setting.name = "othersSetting"
+            self.addChild(setting)
             
         case .IPAD:
-            Objects.eraser.position = CGPoint(x: Int(viewSize!.width-((nodeSize?.width)!)), y: viewPadding!+(viewPadding!+Int((nodeSize?.height)!))*2)
-            Objects.eraser.size = nodeSize!
-            Objects.eraser.name = "eraser"
-            self.addChild(Objects.eraser)
+            eraser.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)), y: viewPadding!+(viewPadding!+Int((nodeSize?.height)!))*2)
+            eraser.size = nodeSize!
+            eraser.name = "eraser"
+            self.addChild(eraser)
             
-            Objects.reset.position = CGPoint(x: Int(viewSize!.width-((nodeSize?.width)!)), y:viewPadding!+(viewPadding!+Int((nodeSize?.height)!)))
-            Objects.reset.size = nodeSize!
-            Objects.reset.name = "reset"
-            self.addChild(Objects.reset)
+            reset.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)), y:viewPadding!+(viewPadding!+Int((nodeSize?.height)!)))
+            reset.size = nodeSize!
+            reset.name = "reset"
+            self.addChild(reset)
             
-            Objects.setting.position = CGPoint(x: Int(viewSize!.width-((nodeSize?.width)!)), y: viewPadding!+10)
-            Objects.setting.size = nodeSize!
-            Objects.setting.name = "othersSetting"
-            self.addChild(Objects.setting)
+            setting.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)), y: viewPadding!+10)
+            setting.size = nodeSize!
+            setting.name = "othersSetting"
+            self.addChild(setting)
             
         }
         
@@ -408,16 +426,16 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
 //        let playerNum = userDefaults.integer(forKey: Consts.PLAYER_NUM)
         
         if playerNum == 3 {
-            playerAs = [Objects.playerA0,Objects.playerA1,Objects.playerA2]
-            playerBs = [Objects.playerB0,Objects.playerB1,Objects.playerB2]
+            playerAs = [playerA0,playerA1,playerA2]
+            playerBs = [playerB0,playerB1,playerB2]
         }
         else if playerNum == 5 {
-            playerAs = [Objects.playerA0,Objects.playerA1,Objects.playerA2,Objects.playerA3,Objects.playerA4]
-            playerBs = [Objects.playerB0,Objects.playerB1,Objects.playerB2,Objects.playerB3,Objects.playerB4]
+            playerAs = [playerA0,playerA1,playerA2,playerA3,playerA4]
+            playerBs = [playerB0,playerB1,playerB2,playerB3,playerB4]
         }
         
         for (i, a) in playerAs.enumerated() {
-            a.position = CGPoint(x: viewPadding!, y: Int(viewSize!.height*0.6)+nodeSpace!*i)
+            a.position = CGPoint(x: viewPadding!, y: Int(self.size.height*0.6)+nodeSpace!*i)
             a.size = nodeSize!
             a.name = "playerA\(i)"
             activePlayers.append(a)
@@ -425,7 +443,7 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         }
         
         for (i,b) in playerBs.enumerated() {
-            b.position = CGPoint(x: viewPadding!, y: Int(viewSize!.height*0.4)-nodeSpace!*i)
+            b.position = CGPoint(x: viewPadding!, y: Int(self.size.height*0.4)-nodeSpace!*i)
             b.size = nodeSize!
             b.name = "playerB\(i)"
             activePlayers.append(b)
@@ -435,10 +453,10 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
     
     func setBall() {
         
-        Objects.ball.position = CGPoint(x: viewPadding!, y: Int(viewSize!.height*0.5))
-        Objects.ball.size = nodeSize!
-        Objects.ball.name = Consts.BALL
-        self.addChild(Objects.ball)
+        ball.position = CGPoint(x: viewPadding!, y: Int(self.size.height*0.5))
+        ball.size = nodeSize!
+        ball.name = Consts.BALL
+        self.addChild(ball)
         
     }
 

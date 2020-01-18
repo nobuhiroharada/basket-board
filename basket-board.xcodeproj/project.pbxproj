@@ -17,7 +17,6 @@
 		E584B9AE21201DFF00C17E8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E584B9AC21201DFF00C17E8D /* LaunchScreen.storyboard */; };
 		E584B9B621201E3D00C17E8D /* MainScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = E584B9B521201E3D00C17E8D /* MainScene.swift */; };
 		E584B9B82121656700C17E8D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E584B9B72121656700C17E8D /* Assets.xcassets */; };
-		E599EF782197F804006082C9 /* Objects.swift in Sources */ = {isa = PBXBuildFile; fileRef = E599EF772197F804006082C9 /* Objects.swift */; };
 		E59B944523D2D2830003B0FC /* Userdefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B944423D2D2830003B0FC /* Userdefaults+.swift */; };
 		E59B944823D2DA340003B0FC /* Consts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B944723D2DA340003B0FC /* Consts.swift */; };
 		E59B944A23D30B2F0003B0FC /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E59B944923D30B2F0003B0FC /* Enums.swift */; };
@@ -40,7 +39,6 @@
 		E584B9AF21201DFF00C17E8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E584B9B521201E3D00C17E8D /* MainScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScene.swift; sourceTree = "<group>"; };
 		E584B9B72121656700C17E8D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E599EF772197F804006082C9 /* Objects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Objects.swift; sourceTree = "<group>"; };
 		E59B944423D2D2830003B0FC /* Userdefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Userdefaults+.swift"; sourceTree = "<group>"; };
 		E59B944723D2DA340003B0FC /* Consts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Consts.swift; sourceTree = "<group>"; };
 		E59B944923D30B2F0003B0FC /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -111,7 +109,6 @@
 			children = (
 				E584B9A321201DFE00C17E8D /* AppDelegate.swift */,
 				E584B9A521201DFE00C17E8D /* MainViewController.swift */,
-				E599EF772197F804006082C9 /* Objects.swift */,
 				E5FC0F6C212B591100293A66 /* Scenes */,
 				E57408D5215F4E6800C32479 /* Nodes */,
 				E59B944323D2D25A0003B0FC /* Extensions */,
@@ -248,7 +245,6 @@
 				E57408D9215F5FB800C32479 /* PlayerNode.swift in Sources */,
 				E57200242142365000F84254 /* SettingScene.swift in Sources */,
 				E584B9A621201DFE00C17E8D /* MainViewController.swift in Sources */,
-				E599EF782197F804006082C9 /* Objects.swift in Sources */,
 				E57408DB215FE49200C32479 /* SettingIconNode.swift in Sources */,
 				E59B944C23D30B820003B0FC /* BallNode.swift in Sources */,
 				E57408D7215F4E8B00C32479 /* BarItemNode.swift in Sources */,
