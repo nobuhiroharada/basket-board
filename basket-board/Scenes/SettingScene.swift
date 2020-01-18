@@ -13,7 +13,7 @@ class SettingScene: SKScene {
     
     let screenHeight = UIScreen.main.bounds.size.height
     
-    var back:  SKSpriteNode = SKSpriteNode(imageNamed: "back")
+    var backButton: SKSpriteNode = SKSpriteNode(imageNamed: "back")
         
     var viewSize: CGSize?
         
@@ -27,9 +27,9 @@ class SettingScene: SKScene {
         setColorIcon()
         setPlayerNumIcon()
         
-        back.position = CGPoint(x: viewSize!.width*0.25, y: viewSize!.height-50)
-        back.size = CGSize(width: 100, height: 50)
-        self.addChild(back)
+        backButton.position = CGPoint(x: viewSize!.width*0.25, y: viewSize!.height-50)
+        backButton.size = CGSize(width: 100, height: 50)
+        self.addChild(backButton)
         
         
         iconOpacityControl()
@@ -48,7 +48,7 @@ class SettingScene: SKScene {
         let location = touch.location(in: self)
         let nodes = self.nodes(at: location)
         
-        if nodes.contains(back)
+        if nodes.contains(backButton)
         {
             goBack()
         }
