@@ -9,14 +9,7 @@ import Foundation
 import SpriteKit
 
 class MainScene: SKScene, SKPhysicsContactDelegate {
-    
-    var viewPadding: Int?
-    
-    var nodeSize: CGSize?
-    var nodeSpace: Int?
-    
-    var device: Device?
-    
+        
     var activePlayers:  Array = [PlayerNode]()
     var playerAs: Array = [PlayerNode]()
     var playerBs: Array = [PlayerNode]()
@@ -55,29 +48,27 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
     override init(size: CGSize) {
         super.init(size: size)
         
-        viewSize = size
+        let currentDevice :Device = getDeviceType()
         
-        if Consts.DISPLAY_HEIGHT <= 736 { device = .IPHONE }
-        else if Consts.DISPLAY_HEIGHT < 1024 { device = .IPHONEX }
-        else { device = .IPAD }
+        // iPhoneの場合のサイズ
+        var nodeSize: CGSize = CGSize(width: Consts.NODE_SIZE_IPHONE, height: Consts.NODE_SIZE_IPHONE)
+        var viewPadding: Int = 15
+        var nodeSpace: Int = 40
         
-        switch device! {
-        case .IPHONE, .IPHONEX:
-            nodeSize = CGSize(width: Consts.NODE_SIZE_IPHONE, height: Consts.NODE_SIZE_IPHONE)
-            nodeSpace = 40
-            viewPadding = 15
+        switch currentDevice {
         case .IPAD:
             nodeSize = CGSize(width: Consts.NODE_SIZE_IPAD, height: Consts.NODE_SIZE_IPAD)
             nodeSpace = 80
             viewPadding = 30
+        case .IPHONE, .IPHONEX: break
         }
         
         playerNum = userDefaults.integer(forKey: Consts.PLAYER_NUM)
         
         setBackground()
-        setTabBarItems()
-        setPlayers(playerNum)
-        setBall()
+        setTabBarItems(nodeSize, viewPadding)
+        setPlayers(playerNum, nodeSize, nodeSpace, viewPadding)
+        setBall(nodeSize, viewPadding)
         
         self.physicsWorld.gravity = .zero
         self.physicsWorld.contactDelegate = self
@@ -113,9 +104,9 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
             || nodes.contains(playerB4)
         {
             if playerNum == 5 {
-                addAction_5players(nodes, scaleBig)
+                addAction5players(nodes, scaleBig)
             } else if playerNum == 3 {
-                addAction_3players(nodes, scaleBig)
+                addAction3players(nodes, scaleBig)
             }
             
             mode = .Move
@@ -152,11 +143,10 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
                 || nodes.contains(playerB4)
             {
                 if playerNum == 5 {
-                    addAction_5players(nodes, action)
+                    addAction5players(nodes, action)
                 } else if playerNum == 3 {
-                    addAction_3players(nodes, action)
+                    addAction3players(nodes, action)
                 }
-                
             }
         }
         
@@ -187,9 +177,9 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
             || nodes.contains(playerB4)
         {
             if playerNum == 5 {
-                addAction_5players(nodes, scaleOrigin)
+                addAction5players(nodes, scaleOrigin)
             } else if playerNum == 3 {
-                addAction_3players(nodes, scaleOrigin)
+                addAction3players(nodes, scaleOrigin)
             }
         }
         
@@ -199,7 +189,7 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func addAction_5players(_ nodes: Array<SKNode>, _ action: SKAction)
+    func addAction5players(_ nodes: Array<SKNode>, _ action: SKAction)
     {
         for node in nodes
         {
@@ -217,7 +207,7 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    func addAction_3players(_ nodes: Array<SKNode>, _ action: SKAction)
+    func addAction3players(_ nodes: Array<SKNode>, _ action: SKAction)
     {
         for node in nodes
         {
@@ -338,8 +328,9 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         
         var background: SKSpriteNode?
         let courtType = userDefaults.integer(forKey: Consts.COURT_TYPE)
+        let currentDevice :Device = getDeviceType()
         
-        switch device! {
+        switch currentDevice {
         case .IPHONE:
             if courtType == 1 {
                 background = SKSpriteNode(imageNamed: "fullcourt")
@@ -371,7 +362,7 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func setTabBarItems() {
+    func setTabBarItems(_ nodeSize: CGSize, _ viewPadding: Int) {
         
 //        drawer.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)), y: viewPadding!)
 //        drawer.size = nodeSize!
@@ -383,36 +374,38 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
 //        rewind.name = "rewind"
 //        self.addChild(rewind)
         
-        switch device! {
+        let currentDevice :Device = getDeviceType()
+        
+        switch currentDevice {
         case .IPHONE, .IPHONEX:
-            eraser.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)*5), y: viewPadding!+10)
-            eraser.size = nodeSize!
+            eraser.position = CGPoint(x: Int(self.size.width-(nodeSize.width)*5), y: viewPadding+10)
+            eraser.size = nodeSize
             eraser.name = "eraser"
             self.addChild(eraser)
             
-            reset.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)*3), y:viewPadding!+10)
-            reset.size = nodeSize!
+            reset.position = CGPoint(x: Int(self.size.width-(nodeSize.width)*3), y:viewPadding+10)
+            reset.size = nodeSize
             reset.name = "reset"
             self.addChild(reset)
             
-            setting.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)), y: viewPadding!+10)
-            setting.size = nodeSize!
+            setting.position = CGPoint(x: Int(self.size.width-nodeSize.width), y: viewPadding+10)
+            setting.size = nodeSize
             setting.name = "othersSetting"
             self.addChild(setting)
             
         case .IPAD:
-            eraser.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)), y: viewPadding!+(viewPadding!+Int((nodeSize?.height)!))*2)
-            eraser.size = nodeSize!
+            eraser.position = CGPoint(x: Int(self.size.width-nodeSize.width), y: viewPadding+(viewPadding+Int(nodeSize.height))*2)
+            eraser.size = nodeSize
             eraser.name = "eraser"
             self.addChild(eraser)
             
-            reset.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)), y:viewPadding!+(viewPadding!+Int((nodeSize?.height)!)))
-            reset.size = nodeSize!
+            reset.position = CGPoint(x: Int(self.size.width-nodeSize.width), y:viewPadding+(viewPadding+Int(nodeSize.height)))
+            reset.size = nodeSize
             reset.name = "reset"
             self.addChild(reset)
             
-            setting.position = CGPoint(x: Int(self.size.width-((nodeSize?.width)!)), y: viewPadding!+10)
-            setting.size = nodeSize!
+            setting.position = CGPoint(x: Int(self.size.width-nodeSize.width), y: viewPadding+10)
+            setting.size = nodeSize
             setting.name = "othersSetting"
             self.addChild(setting)
             
@@ -421,10 +414,8 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    func setPlayers(_ playerNum: Int) {
-        
-//        let playerNum = userDefaults.integer(forKey: Consts.PLAYER_NUM)
-        
+    func setPlayers(_ playerNum: Int, _ nodeSize: CGSize, _ nodeSpace: Int, _ viewPadding: Int) {
+                
         if playerNum == 3 {
             playerAs = [playerA0,playerA1,playerA2]
             playerBs = [playerB0,playerB1,playerB2]
@@ -435,29 +426,39 @@ class MainScene: SKScene, SKPhysicsContactDelegate {
         }
         
         for (i, a) in playerAs.enumerated() {
-            a.position = CGPoint(x: viewPadding!, y: Int(self.size.height*0.6)+nodeSpace!*i)
-            a.size = nodeSize!
+            a.position = CGPoint(x: viewPadding, y: Int(self.size.height*0.6)+nodeSpace*i)
+            a.size = nodeSize
             a.name = "playerA\(i)"
             activePlayers.append(a)
             self.addChild(a)
         }
         
         for (i,b) in playerBs.enumerated() {
-            b.position = CGPoint(x: viewPadding!, y: Int(self.size.height*0.4)-nodeSpace!*i)
-            b.size = nodeSize!
+            b.position = CGPoint(x: viewPadding, y: Int(self.size.height*0.4)-nodeSpace*i)
+            b.size = nodeSize
             b.name = "playerB\(i)"
             activePlayers.append(b)
             self.addChild(b)
         }
     }
     
-    func setBall() {
+    func setBall(_ nodeSize: CGSize, _ viewPadding: Int) {
         
-        ball.position = CGPoint(x: viewPadding!, y: Int(self.size.height*0.5))
-        ball.size = nodeSize!
+        ball.position = CGPoint(x: viewPadding, y: Int(self.size.height*0.5))
+        ball.size = nodeSize
         ball.name = Consts.BALL
         self.addChild(ball)
         
     }
 
+    func getDeviceType() -> Device {
+        
+        var device: Device = .IPHONE
+        
+        if Consts.DISPLAY_HEIGHT <= 736 { device = .IPHONE }
+        else if Consts.DISPLAY_HEIGHT < 1024 { device = .IPHONEX }
+        else { device = .IPAD }
+        
+        return device
+    }
 }
