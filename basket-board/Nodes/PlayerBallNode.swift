@@ -11,28 +11,24 @@ import SpriteKit
 
 class PlayerBallNode: SKSpriteNode {
     
-    let screenHeight = UIScreen.main.bounds.size.height
-    
-    var NODE_PHYSICSBODY_RADIUS: CGFloat?
-    var NODE_SIZE_IPHONE: CGFloat = 27.0
-    var NODE_SIZE_IPAD: CGFloat   = 54.0
+    var radius: CGFloat?
     
     override init(texture: SKTexture?, color: UIColor, size: CGSize) {
         super.init(texture: texture, color: color, size: size)
         
-        if screenHeight >= 1024 { // iPad
-            NODE_PHYSICSBODY_RADIUS = NODE_SIZE_IPAD*0.55
+        if Consts.DISPLAY_HEIGHT >= 1024 { // iPad
+            radius = Consts.NODE_SIZE_IPAD*0.55
         } else { // iPhone
-            NODE_PHYSICSBODY_RADIUS = NODE_SIZE_IPHONE*0.55
+            radius = Consts.NODE_SIZE_IPHONE*0.55
         }
-        
-        self.physicsBody = SKPhysicsBody(circleOfRadius: NODE_PHYSICSBODY_RADIUS!)
+
+        self.physicsBody = SKPhysicsBody(circleOfRadius: radius!)
         self.physicsBody?.categoryBitMask = 1
         self.physicsBody?.collisionBitMask = 1
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        
     }
+    
 }
